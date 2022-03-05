@@ -30,6 +30,11 @@ class Lecturer(Mentor):
         super().__init__(name, surname)
         self.grades = {}
 
+    def __str__(self):
+        # return f'{self.name}\n{self.surname}\n{sum(self.grades.values()) / len(self.grades.values())}'
+        for i in self.grades.values():
+            return str(sum(i))
+
 
 class Reviewer(Mentor):
     def rate_hw(self, student, course, grade):
@@ -40,6 +45,9 @@ class Reviewer(Mentor):
                 student.grades[course] = [grade]
         else:
             return 'Ошибка'
+
+    def __str__(self):
+        return f'{self.name}\n{self.surname}'
 
 
 best_student = Student('Ruoy', 'Eman', 'your_gender')
@@ -62,3 +70,5 @@ best_student.rate_hw(cool_lecturer, 'Python', 5)
 
 print(best_student.grades)
 print(cool_lecturer.grades)
+print(cool_reviewer)
+print(cool_lecturer)
