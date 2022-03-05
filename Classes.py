@@ -39,7 +39,7 @@ class Reviewer(Mentor):
             else:
                 student.grades[course] = [grade]
         else:
-            return 'error'
+            return 'Ошибка'
 
 
 best_student = Student('Ruoy', 'Eman', 'your_gender')
