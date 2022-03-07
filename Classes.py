@@ -17,6 +17,30 @@ class Student:
         else:
             return 'error'
 
+    def __str__(self):
+        for i in self.grades.values():
+            print(f'{self.name}\n{self.surname}\nСредняя оценка за домашние задания: {str(round(sum(i) / len(i), 1))}')
+            print('Курсы в процессе: ', end='')
+            print(*self.courses_in_progress, sep=', ')
+            print('Оконченные курсы: ', end='')
+            print(*self.finished_courses, sep=', ')
+            return ''
+
+    def compare(self, another_student):
+        if isinstance(another_student, Student):
+            res_self = 0
+            for i in self.grades.values():
+                res_self = round(sum(i) / len(i), 1)
+            res_another = 0
+            for i in another_student.grades.values():
+                res_another = round(sum(i) / len(i), 1)
+            if res_self < res_another:
+                return f'{another_student.name} {another_student.surname} is the best student!'
+            elif res_self > res_another:
+                return f'{self.name} {self.surname} is the best student!'
+            else:
+                return f'Students are equal.'
+
 
 class Mentor:
     def __init__(self, name, surname):
@@ -31,9 +55,23 @@ class Lecturer(Mentor):
         self.grades = {}
 
     def __str__(self):
-        # return f'{self.name}\n{self.surname}\n{sum(self.grades.values()) / len(self.grades.values())}'
         for i in self.grades.values():
-            return str(sum(i))
+            return f'{self.name}\n{self.surname}\nСредняя оценка за лекции: {str(round(sum(i) / len(i), 1))}'
+
+    def compare(self, another_lecturer):
+        if isinstance(another_lecturer, Lecturer):
+            res_self = 0
+            for i in self.grades.values():
+                res_self = round(sum(i) / len(i), 1)
+            res_another = 0
+            for i in another_lecturer.grades.values():
+                res_another = round(sum(i) / len(i), 1)
+            if res_self < res_another:
+                return f'{another_lecturer.name} {another_lecturer.surname} is the best lecturer!'
+            elif res_self > res_another:
+                return f'{self.name} {self.surname} is the best lecturer!'
+            else:
+                return f'Lecturers are equal.'
 
 
 class Reviewer(Mentor):
@@ -50,25 +88,41 @@ class Reviewer(Mentor):
         return f'{self.name}\n{self.surname}'
 
 
-best_student = Student('Ruoy', 'Eman', 'your_gender')
+best_student = Student('Ruoy', 'Eman', 'Male')
 best_student.courses_in_progress += ['Python']
+best_student.courses_in_progress += ['Git']
+best_student.finished_courses += ['Введение в программирование']
+
+good_student = Student('Bellatrix', 'Le Strange', 'Female')
+good_student.courses_in_progress += ['Python']
+good_student.courses_in_progress += ['Git']
+good_student.finished_courses += ['Введение в программирование']
 
 cool_mentor = Mentor('Some', 'Buddy')
 cool_mentor.courses_attached += ['Python']
 
 cool_reviewer = Reviewer('Dolores', 'Umbridge')
 cool_reviewer.courses_attached += ['Python']
-cool_reviewer.rate_hw(best_student, 'Python', 10)
-cool_reviewer.rate_hw(best_student, 'Python', 10)
-cool_reviewer.rate_hw(best_student, 'Python', 10)
+cool_reviewer.rate_hw(best_student, 'Python', 7)
+cool_reviewer.rate_hw(best_student, 'Python', 9)
+cool_reviewer.rate_hw(best_student, 'Python', 7)
+cool_reviewer.rate_hw(good_student, 'Python', 9)
+cool_reviewer.rate_hw(good_student, 'Python', 8)
+cool_reviewer.rate_hw(good_student, 'Python', 9)
 
 cool_lecturer = Lecturer('Severus', 'Snape')
 cool_lecturer.courses_attached += ['Python']
-best_student.rate_hw(cool_lecturer, 'Python', 5)
-best_student.rate_hw(cool_lecturer, 'Python', 5)
-best_student.rate_hw(cool_lecturer, 'Python', 5)
 
-print(best_student.grades)
-print(cool_lecturer.grades)
-print(cool_reviewer)
-print(cool_lecturer)
+good_lecturer = Lecturer('Rubeus', 'Hagrid')
+good_lecturer.courses_attached += ['Python']
+
+best_student.rate_hw(cool_lecturer, 'Python', 5)
+best_student.rate_hw(cool_lecturer, 'Python', 8)
+best_student.rate_hw(cool_lecturer, 'Python', 7)
+
+best_student.rate_hw(good_lecturer, 'Python', 6)
+best_student.rate_hw(good_lecturer, 'Python', 8)
+best_student.rate_hw(good_lecturer, 'Python', 9)
+
+print(cool_lecturer.compare(good_lecturer))
+print(best_student.compare(good_student))
