@@ -110,19 +110,46 @@ cool_reviewer.rate_hw(good_student, 'Python', 9)
 cool_reviewer.rate_hw(good_student, 'Python', 8)
 cool_reviewer.rate_hw(good_student, 'Python', 9)
 
+good_reviewer = Reviewer('Cornelius', 'Fudge')
+good_reviewer.courses_attached += ['Git']
+good_reviewer.rate_hw(best_student, 'Git', 10)
+good_reviewer.rate_hw(best_student, 'Git', 9)
+good_reviewer.rate_hw(best_student, 'Git', 8)
+good_reviewer.rate_hw(good_student, 'Git', 7)
+good_reviewer.rate_hw(good_student, 'Git', 5)
+good_reviewer.rate_hw(good_student, 'Git', 7)
+
 cool_lecturer = Lecturer('Severus', 'Snape')
 cool_lecturer.courses_attached += ['Python']
 
 good_lecturer = Lecturer('Rubeus', 'Hagrid')
-good_lecturer.courses_attached += ['Python']
+good_lecturer.courses_attached += ['Git']
 
-best_student.rate_hw(cool_lecturer, 'Python', 5)
+best_student.rate_hw(cool_lecturer, 'Python', 8)
 best_student.rate_hw(cool_lecturer, 'Python', 8)
 best_student.rate_hw(cool_lecturer, 'Python', 7)
 
-best_student.rate_hw(good_lecturer, 'Python', 6)
-best_student.rate_hw(good_lecturer, 'Python', 8)
-best_student.rate_hw(good_lecturer, 'Python', 9)
+best_student.rate_hw(good_lecturer, 'Git', 6)
+best_student.rate_hw(good_lecturer, 'Git', 8)
+best_student.rate_hw(good_lecturer, 'Git', 7)
 
 print(cool_lecturer.compare(good_lecturer))
 print(best_student.compare(good_student))
+
+
+def summ_student_grades(students, course):
+    summ = 0
+    for name in students:
+        if isinstance(name, Student) and course in name.courses_in_progress:
+            for mark in name.grades[course]:
+                summ += mark
+    return f'Общее количество баллов студентов на курсе {course}: {summ}'
+
+
+def summ_lector_grades(lectors, course):
+    summ = 0
+    for name in lectors:
+        if isinstance(name, Lecturer) and course in name.courses_attached:
+            for mark in name.grades[course]:
+                summ += mark
+    return f'Общее количество баллов лекторов на курсе {course}: {summ}'
